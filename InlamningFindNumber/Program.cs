@@ -45,7 +45,6 @@ namespace InlamningFindNumber
                         LastOutput(toBeSearched, ref toHoldNumber, ref toNewString, i, indexOf);
                     }
                 }
-
             }
             Console.WriteLine($"\n\n The total sum is: {toHoldNumber}");
           
@@ -88,7 +87,7 @@ namespace InlamningFindNumber
 
         private static BigInteger ConvertToNumber(string inputString)
         {
-            BigInteger tempBig = BigInteger.Parse(inputString);
+            bool tryParseToBig = BigInteger.TryParse(inputString, out BigInteger tempBig);
             return tempBig;
         }
         private static string AddString(string toBeSearched, int i, int indexOf)
