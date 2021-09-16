@@ -7,10 +7,12 @@ namespace InlamningFindNumber
     {
         static void Main(string[] args)
         {
+            Random randomColors = new Random();
             string toBeSearched = "29535123p48723487597645723645";
             BigInteger toHoldNumber = 0;
             int lengthOfString;
             string toNewString = ""; 
+
             for (int i = 0; i < toBeSearched.Length; i++)
             {
                 char firstOcc = toBeSearched[i];
@@ -19,7 +21,7 @@ namespace InlamningFindNumber
                 lengthOfString++;
                 bool isLetters = false;
                 toNewString = "";
-
+                
                 for (int j = i; j <= indexOf; j++)
                 {
                     if (Char.IsLetter(toBeSearched[j]))
@@ -27,59 +29,58 @@ namespace InlamningFindNumber
                         isLetters = true;
                     }
                 }
-
                 if(isLetters != true) 
                 {
                     if (i == 0)
                     {
-                        FirsOutput(toBeSearched, ref toHoldNumber, lengthOfString, ref toNewString, i, indexOf);
+                        FirsOutput(toBeSearched, ref toHoldNumber, lengthOfString, ref toNewString, i, indexOf,randomColors);
                     }
 
                     else if (i > 0 && indexOf > 0 && indexOf < toBeSearched.Length - 1)
                     {
-                        MiddleOutput(toBeSearched, ref toHoldNumber, lengthOfString, ref toNewString, i, indexOf);
+                        MiddleOutput(toBeSearched, ref toHoldNumber, lengthOfString, ref toNewString, i, indexOf, randomColors);
                     }
 
                     else if (indexOf == toBeSearched.Length - 1)
                     {
-                        LastOutput(toBeSearched, ref toHoldNumber, ref toNewString, i, indexOf);
+                        LastOutput(toBeSearched, ref toHoldNumber, ref toNewString, i, indexOf, randomColors);
                     }
                 }
             }
             Console.WriteLine($"\n\n The total sum is: {toHoldNumber}");
-          
+
             Console.ReadLine();
         }
 
-        private static void FirsOutput(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf)
+        private static void FirsOutput(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf,Random rand)
         {
             toNewString += AddString(toBeSearched, i, indexOf);
             toHoldNumber += ConvertToNumber(toNewString);
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = (ConsoleColor)rand.Next(1,6);
             Console.Write(toBeSearched.Substring(i, lengthOfString + i));
             Console.ResetColor();
             Console.Write(toBeSearched.Substring(indexOf + 1));
             Console.WriteLine();
         }
 
-        private static void MiddleOutput(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf)
+        private static void MiddleOutput(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf,Random rand)
         {
             toNewString += AddString(toBeSearched, i, indexOf);
             toHoldNumber += ConvertToNumber(toNewString);
             Console.Write(toBeSearched.Substring(0, i));
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = (ConsoleColor)rand.Next(1, 6);
             Console.Write(toBeSearched.Substring(i, lengthOfString));
             Console.ResetColor();
             Console.Write(toBeSearched.Substring(indexOf + 1));
             Console.WriteLine();
         }
 
-        private static void LastOutput(string toBeSearched, ref BigInteger toHoldNumber, ref string toNewString, int i, int indexOf)
+        private static void LastOutput(string toBeSearched, ref BigInteger toHoldNumber, ref string toNewString, int i, int indexOf,Random rand)
         {
             toNewString += AddString(toBeSearched, i, indexOf);
             toHoldNumber += ConvertToNumber(toNewString);
             Console.Write(toBeSearched.Substring(0, i));
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = (ConsoleColor)rand.Next(1, 6);
             Console.Write(toBeSearched.Substring(i));
             Console.ResetColor();
             Console.WriteLine();
