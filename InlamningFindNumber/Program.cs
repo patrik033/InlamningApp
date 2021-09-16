@@ -9,7 +9,6 @@ namespace InlamningFindNumber
         {
             string toBeSearched = "29535123p48723487597645723645";
             BigInteger toHoldNumber = 0;
-     
             int lengthOfString = 0;
            
             for (int i = 0; i < toBeSearched.Length; i++)
@@ -18,37 +17,51 @@ namespace InlamningFindNumber
                 int indexOf = toBeSearched.IndexOf(firstOcc, i + 1);
                 lengthOfString = indexOf - i;
                 lengthOfString++;
+                bool isLetters = false;
 
-
-                if (i == 0)
+                for (int j = i; j <= indexOf; j++)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(toBeSearched.Substring(i, lengthOfString+i));
-                    Console.ResetColor();
-                    Console.Write(toBeSearched.Substring(indexOf+1));
-                    Console.WriteLine();
+                    if (Char.IsLetter(toBeSearched[j]))
+                    {
+                        isLetters = true;
+                    }
                 }
 
-                else if (i > 0 && indexOf > 0 && indexOf < toBeSearched.Length - 1)
+                if(isLetters != true) 
                 {
+                    if (i == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(toBeSearched.Substring(i, lengthOfString + i));
+                        Console.ResetColor();
+                        Console.Write(toBeSearched.Substring(indexOf + 1));
+                        Console.WriteLine();
+                    }
+
+                    else if (i > 0 && indexOf > 0 && indexOf < toBeSearched.Length - 1)
+                    {
 
 
-                    Console.Write(toBeSearched.Substring(0, i));
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(toBeSearched.Substring(i, lengthOfString));
-                    Console.ResetColor();
-                    Console.Write(toBeSearched.Substring(indexOf+1));
-                    Console.WriteLine();
+                        Console.Write(toBeSearched.Substring(0, i));
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(toBeSearched.Substring(i, lengthOfString));
+                        Console.ResetColor();
+                        Console.Write(toBeSearched.Substring(indexOf + 1));
+                        Console.WriteLine();
+                    }
+
+                    else if (indexOf == toBeSearched.Length - 1)
+                    {
+                        Console.Write(toBeSearched.Substring(0, i));
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(toBeSearched.Substring(i));
+                        Console.ResetColor();
+                        Console.WriteLine();
+                    }
                 }
 
-                else if (indexOf == toBeSearched.Length - 1)
-                {
-                    Console.Write(toBeSearched.Substring(0, i));
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(toBeSearched.Substring(i));
-                    Console.ResetColor();
-                    Console.WriteLine();
-                }
+
+                
             }
             Console.ReadLine();
         }
