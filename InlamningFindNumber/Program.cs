@@ -11,9 +11,9 @@ namespace InlamningFindNumber
             Random randomColors = new Random();
             Regex regex = new Regex("^[0-9]*$");
             
-            //Console.Write("Enter a text string: ");
-            //string toBeSearched = Console.ReadLine();
-            string toBeSearched = "29535123p48723487597645723645";
+            Console.Write("Enter a text string: ");
+            string toBeSearched = Console.ReadLine();
+            //string toBeSearched = "29535123p48723487597645723645";
             BigInteger toHoldNumber = 0;
             int lengthOfString;
             string updateCharToString = "";
@@ -74,8 +74,6 @@ namespace InlamningFindNumber
         //skriver ut början på strängen i färg
         private static void FirsOutput(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf, Random rand)
         {
-
-           
                 Console.ForegroundColor = (ConsoleColor)rand.Next(1, 7);
                 Console.Write(toBeSearched.Substring(i, lengthOfString));
                 Console.ResetColor();
@@ -83,14 +81,10 @@ namespace InlamningFindNumber
                 Console.WriteLine();
                 toNewString += AddString(toBeSearched, i, indexOf);
                 toHoldNumber += ConvertToNumber(toNewString);
-
-
         }
         //skriver ut mitten på strängen i färg
         private static void MiddleOutputs(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf, Random rand)
         {
-
-
             Console.Write(toBeSearched.Substring(0, i));
             Console.ForegroundColor = (ConsoleColor)rand.Next(1, 7);
             Console.Write(toBeSearched.Substring(i, lengthOfString));
