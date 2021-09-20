@@ -11,16 +11,18 @@ namespace InlamningFindNumber
             Random randomColors = new Random();
             Regex regex = new Regex("^[0-9]*$");
             
-            Console.Write("Enter a text string: ");
-            string toBeSearched = Console.ReadLine();
-            //string toBeSearched = "29535123p48723487597645723645";
-            BigInteger toHoldNumber = 0;
+            //Console.Write("Enter a text string: ");
+            //string toBeSearched = Console.ReadLine();
+            string toBeSearched = "29535123p48723487597645723645";
+            BigInteger endingResult = 0;
             int lengthOfString;
             string updateCharToString = "";
 
 
             for (int i = 0; i < toBeSearched.Length; i++)
             {
+                //firstOcc kommer flytta fram ett steg för varje varv loopen kör
+                //vilket gör att sökningen(indexOf kommer söka efter nästa plats efter varje varv
                 char firstOcc = toBeSearched[i];
                 //nästa karaktär med samma värde som i
                 int indexOf = toBeSearched.IndexOf(firstOcc, i + 1);
@@ -29,7 +31,7 @@ namespace InlamningFindNumber
                 lengthOfString++;
                 bool isLetter = false;
                 updateCharToString = "";
-                //Kollar för varje varv om räknaren inte är en siffra mellan 0-9
+                //Kollar för varje varv om delsträngen innehåller en siffra mellan 0-9
                 isLetter = IsMatch(regex, toBeSearched, i, indexOf, isLetter);
 
 
@@ -41,21 +43,21 @@ namespace InlamningFindNumber
                 {
                     if (i == 0)
                     {
-                        FirsOutput(toBeSearched, ref toHoldNumber, lengthOfString, ref updateCharToString, i, indexOf, randomColors);
+                        BeginningPrint(toBeSearched, ref endingResult, lengthOfString, ref updateCharToString, i, indexOf, randomColors);
                     }
 
                     else if (i > 0 && indexOf > 0 && indexOf < toBeSearched.Length - 1)
                     {
-                        MiddleOutputs(toBeSearched, ref toHoldNumber, lengthOfString, ref updateCharToString, i, indexOf, randomColors);
+                        MiddlePrint(toBeSearched, ref endingResult, lengthOfString, ref updateCharToString, i, indexOf, randomColors);
                     }
 
                     else if (indexOf == toBeSearched.Length - 1)
                     {
-                        LastOutput(toBeSearched, ref toHoldNumber, ref updateCharToString, i, indexOf, randomColors);
+                        LastPrint(toBeSearched, ref endingResult, ref updateCharToString, i, indexOf, randomColors);
                     }
                 }
             }
-            Console.WriteLine($"\n\nThe sum for all numbers in colors are: {toHoldNumber}");
+            Console.WriteLine($"\n\nThe sum for all numbers in colors are: {endingResult}");
             Console.ReadLine();
         }
 
@@ -72,7 +74,7 @@ namespace InlamningFindNumber
         }
 
         //skriver ut början på strängen i färg
-        private static void FirsOutput(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf, Random rand)
+        private static void BeginningPrint(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf, Random rand)
         {
                 Console.ForegroundColor = (ConsoleColor)rand.Next(1, 7);
                 Console.Write(toBeSearched.Substring(i, lengthOfString));
@@ -83,7 +85,7 @@ namespace InlamningFindNumber
                 toHoldNumber += ConvertToNumber(toNewString);
         }
         //skriver ut mitten på strängen i färg
-        private static void MiddleOutputs(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf, Random rand)
+        private static void MiddlePrint(string toBeSearched, ref BigInteger toHoldNumber, int lengthOfString, ref string toNewString, int i, int indexOf, Random rand)
         {
             Console.Write(toBeSearched.Substring(0, i));
             Console.ForegroundColor = (ConsoleColor)rand.Next(1, 7);
@@ -95,15 +97,15 @@ namespace InlamningFindNumber
             toHoldNumber += ConvertToNumber(toNewString);
         }
         //skriver ut slutet på strängen i färg
-        private static void LastOutput(string toBeSearched, ref BigInteger toHoldNumber, ref string toNewString, int i, int indexOf, Random rand)
+        private static void LastPrint(string toBeSearched, ref BigInteger toHoldNumber, ref string toNewString, int i, int indexOf, Random rand)
         {
-            toNewString += AddString(toBeSearched, i, indexOf);
-            toHoldNumber += ConvertToNumber(toNewString);
             Console.Write(toBeSearched.Substring(0, i));
             Console.ForegroundColor = (ConsoleColor)rand.Next(1, 7);
             Console.Write(toBeSearched.Substring(i));
             Console.ResetColor();
             Console.WriteLine();
+            toNewString += AddString(toBeSearched, i, indexOf);
+            toHoldNumber += ConvertToNumber(toNewString);
         }
         //försöker konvertera delsträngen till en BigInteger
         private static BigInteger ConvertToNumber(string inputString)
